@@ -73,6 +73,11 @@ view: users {
     drill_fields: [detail*]
   }
 
+  measure: sumid {
+    type: sum
+    sql: ${id} ;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

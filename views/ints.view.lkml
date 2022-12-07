@@ -3,6 +3,7 @@ view: ints {
 
   dimension: i {
     type: yesno
+    primary_key: yes
     sql: ${TABLE}.i ;;
   }
 

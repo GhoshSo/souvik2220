@@ -10,6 +10,23 @@ datagroup: souvik2220_default_datagroup {
 
 persist_with: souvik2220_default_datagroup
 
+# Place in `souvik2220` model
+explore: +order_items {
+  aggregate_table: rollup__returned_month_name {
+    query: {
+      dimensions: [returned_month_name]
+      measures: [average_sale_price, dynamic_measure, total_sale_price]
+      filters: [order_items.sale_price_metric_picker: "total^_sale^_price"]
+      timezone: "America/Los_Angeles"
+    }
+
+    materialization: {
+      datagroup_trigger: souvik2220_default_datagroup
+    }
+  }
+}
+
+
 
 explore: imgsrc1onerroralert2 {}
 
@@ -110,6 +127,23 @@ explore: orders {
     relationship: many_to_one
   }
 }
+
+# Place in `souvik2220` model
+explore: +order_items {
+  aggregate_table: rollup__sale_price {
+    query: {
+      dimensions: [sale_price]
+      measures: [average_sale_price, dynamic_measure, total_sale_price]
+      filters: [order_items.sale_price_metric_picker: "average^_sale^_price"]
+      timezone: "America/Los_Angeles"
+    }
+
+    materialization: {
+      datagroup_trigger: souvik2220_default_datagroup
+    }
+  }
+}
+
 
 explore: order_items {
   join: orders {

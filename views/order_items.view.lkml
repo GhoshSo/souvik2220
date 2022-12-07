@@ -15,10 +15,6 @@ view: order_items {
     sql: ${sale_price} ;;
   }
 
-  measure: max_sale_price {
-    type: max
-    sql: ${sale_price} ;;
-  }
 
   parameter: sale_price_metric_picker {
     description: "Use with the Sale Price Metric measure"

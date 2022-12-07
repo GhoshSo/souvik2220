@@ -15,6 +15,11 @@ view: order_items {
     sql: ${sale_price} ;;
   }
 
+  measure: max_sale_price {
+    type: max
+    sql: ${sale_price} ;;
+  }
+
 
 
 

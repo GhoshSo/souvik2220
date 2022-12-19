@@ -35,6 +35,13 @@ view: orders {
 
   measure: count {
     type: count
+    html: {% if value != null %}
+          <span style="color:darkgreen;">{{ rendered_value }}</span>
+          {% elsif value < 50 %}
+          <span style="color:goldenrod;">{{ rendered_value }}</span>
+          {% else %}
+           <span style="color:darkred;">{{ rendered_value }}</span>
+          {% endif %} ;;
     drill_fields: [detail*]
   }
 

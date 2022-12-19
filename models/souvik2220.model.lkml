@@ -4,7 +4,7 @@ connection: "thelook"
 include: "/views/**/*.view"
 
 datagroup: souvik2220_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
@@ -119,6 +119,21 @@ explore: inventory_items {
     relationship: many_to_one
   }
 }
+# Place in `souvik2220` model
+explore: +orders {
+  aggregate_table: rollup__created_year {
+    query: {
+      dimensions: [created_year]
+      measures: [count]
+      filters: [orders.status: "complete,pending"]
+      timezone: "America/Los_Angeles"
+    }
+
+    materialization: {
+      datagroup_trigger: souvik2220_default_datagroup
+    }
+  }
+}
 
 explore: orders {
   join: users {
@@ -149,13 +164,13 @@ explore: order_items {
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   join: inventory_items {
     type: left_outer
     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   join: users {
@@ -168,6 +183,12 @@ explore: order_items {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
+  }
+
+  join: user_data {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${users.id} = ${user_data.user_id} ;;
   }
 }
 

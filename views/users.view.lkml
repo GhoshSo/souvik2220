@@ -8,7 +8,7 @@ view: users {
     sql: ${TABLE}.id ;;
   }
 
-  dimension: age {
+  measure: age {
     type: number
     sql: ${TABLE}.age ;;
   }
@@ -16,6 +16,11 @@ view: users {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+    link: {
+      label: "Business Pulse By State Dashboard"
+      url: "http://www.google.com/search?q={{ value | url_encode}}"
+      ## url: "https://instance_name.looker.com/dashboards/694?State={{ _filters['users.state'] | url_encode }}"
+    }
   }
 
   dimension: country {
